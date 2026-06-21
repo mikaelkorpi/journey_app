@@ -50,6 +50,8 @@
   .auth-msg { font-size:13px; margin-top:12px; text-align:center; min-height:18px; }
   .auth-msg.err { color:#d9705a; }
   .auth-msg.ok { color:#94a87e; }
+  .auth-forgot { font-size:12px; color:var(--ink-faint); text-align:center; margin-top:10px; cursor:pointer; text-decoration:underline; }
+  .auth-forgot:hover { color:var(--ink-soft); }
 
   /* APP */
   .app { display:none; }
@@ -275,6 +277,7 @@
     <div class="auth-field"><label>Password</label><input type="password" id="authPass" autocomplete="current-password" /></div>
     <button class="auth-submit" id="authSubmit">Sign in</button>
     <div class="auth-msg" id="authMsg"></div>
+    <div class="auth-forgot hidden" id="forgotLink">Forgot password?</div>
   </div>
 </div>
 
@@ -645,6 +648,18 @@ document.getElementById('authSubmit').onclick=async()=>{
 };
 
 document.getElementById('signOutBtn').onclick=async()=>{ await sb.auth.signOut(); location.reload(); };
+
+// show forgot link only on login tab
+document.getElementById('tabLogin').addEventListener('click',()=>document.getElementById('forgotLink').classList.remove('hidden'));
+document.getElementById('tabSignup').addEventListener('click',()=>document.getElementById('forgotLink').classList.add('hidden'));
+document.getElementById('forgotLink').onclick=async()=>{
+  const email=document.getElementById('authEmail').value.trim();
+  const msg=document.getElementById('authMsg');
+  if(!email){ msg.className='auth-msg err'; msg.textContent='Enter your email first.'; return; }
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:'https://journey-app-i9hc.vercel.app'});
+  if(error){ msg.className='auth-msg err'; msg.textContent=error.message; }
+  else { msg.className='auth-msg ok'; msg.textContent='Password reset email sent. Check your inbox.'; }
+};
 
 sb.auth.onAuthStateChange(async(event,session)=>{
   if (session && session.user) {
