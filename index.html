@@ -65,6 +65,7 @@
   .icon-btn:hover { color:var(--ink); border-color:var(--line-strong); }
   .icon-btn:active { transform:scale(.94); }
   #langBtn { width:auto; padding:0 11px; font-size:12px; font-weight:700; letter-spacing:.05em; }
+  .text-btn { width:auto; padding:0 12px; font-size:12px; font-weight:700; letter-spacing:.02em; }
   .sync-dot { width:7px; height:7px; border-radius:50%; background:var(--ink-faint); margin-left:4px; display:inline-block; transition:background .3s; }
   .sync-dot.syncing { background:var(--accent); animation:pulse 1s infinite; }
   .sync-dot.ok { background:#94a87e; }
@@ -300,8 +301,8 @@
       <div class="head-actions">
         <button class="icon-btn" id="langBtn" title="Language">EN</button>
         <button class="icon-btn" id="themeBtn" title="Switch theme">&#9680;</button>
-        <button class="icon-btn" id="exportBtn" title="Download backup">&#8595;</button>
-        <button class="icon-btn" id="signOutBtn" title="Sign out" style="font-size:13px;font-weight:700;">&#8594;</button>
+        <button class="icon-btn text-btn" id="exportBtn" title="Export all entries as JSON">Backup</button>
+        <button class="icon-btn text-btn" id="signOutBtn" title="Sign out">Sign out</button>
         <span class="sync-dot" id="syncDot" title="Sync status"></span>
       </div>
     </header>
